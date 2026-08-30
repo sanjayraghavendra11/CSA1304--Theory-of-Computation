@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int n;                     // Number of states
+int epsilon[10][10];       // Epsilon transition matrix
+int visited[10];
+
+// DFS to find epsilon closure
+void dfs(int state) {
+    int i;
+    visited[state] = 1;
+
+    for (i = 0; i < n; i++) {
+        if (epsilon[state][i] == 1 && !visited[i]) {
+            dfs(i);
+        }
+    }
+}
+
+int main() {
+    int i, j;
+
+    printf("Enter number of states: ");
+    scanf("%d", &n);
+
+    printf("Enter epsilon transition matrix (1 if ε-move exists, else 0):\n");
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            scanf("%d", &epsilon[i][j]);
+        }
+    }
+
+    // Compute epsilon-closure for each state
+    for (i = 0; i < n; i++) {
+        // Reset visited array
+        for (j = 0; j < n; j++) {
+            visited[j] = 0;
+        }
+
+        dfs(i);
+
+        printf("ε-closure(q%d) = { ", i);
+        for (j = 0; j < n; j++) {
+            if (visited[j]) {
+                printf("q%d ", j);
+            }
+        }
+        printf("}\n");
+    }
+
+    return 0;
+}

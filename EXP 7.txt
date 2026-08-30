@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100];
+    int len, i, count0 = 0, count1 = 0, valid = 1;
+
+    printf("Enter the string: ");
+    scanf("%s", str);
+
+    len = strlen(str);
+
+    // Count leading 0's
+    i = 0;
+    while (i < len && str[i] == '0') {
+        count0++;
+        i++;
+    }
+
+    // Count trailing 1's
+    i = len - 1;
+    while (i >= 0 && str[i] == '1') {
+        count1++;
+        i--;
+    }
+
+    // Check all characters in between
+    for (i = count0; i < len - count1; i++) {
+        if (str[i] != '\0') {
+            valid = 0;
+            break;
+        }
+    }
+
+    if (count0 == count1 && valid)
+        printf("String is ACCEPTED by the CFG\n");
+    else
+        printf("String is NOT accepted by the CFG\n");
+
+    return 0;
+}

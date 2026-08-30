@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100];
+    int len, i, left = 0, right = 0, valid = 1;
+
+    printf("Enter the string: ");
+    scanf("%s", str);
+
+    len = strlen(str);
+
+    // Count leading zeros
+    i = 0;
+    while (i < len && str[i] == '0') {
+        left++;
+        i++;
+    }
+
+    // Count trailing zeros
+    i = len - 1;
+    while (i >= 0 && str[i] == '0') {
+        right++;
+        i--;
+    }
+
+    // Leading and trailing zeros must be equal
+    if (left != right) {
+        valid = 0;
+    }
+
+    // Middle part must contain only 1's
+    for (i = left; i < len - right; i++) {
+        if (str[i] != '1') {
+            valid = 0;
+            break;
+        }
+    }
+
+    if (valid)
+        printf("String is ACCEPTED by the CFG\n");
+    else
+        printf("String is NOT accepted by the CFG\n");
+
+    return 0;
+}
